@@ -3,7 +3,7 @@ name: Run a sample test on github  #name of the workflow
 on:             #trigger on
   push:        # whenever the devloper pushes code
     branches:  # when anyone pushed code on the branches
-      - main    # when pushes code to main
+      - master    # when pushes code to main
 
 
 jobs:  # now you can define the job to github
@@ -31,7 +31,7 @@ jobs:  # now you can define the job to github
       - name: Run/execute the tests  #STEP 4
         run: npx playwright test   # normla command in order  to run all tests
         env:
-          BASE_URL: $SECRET_PROD_URL   # so even though ou put on dotenv and load config file, te github uses its own maachne where the .env file will never load
+          BASE_URL: ${{ secrets.PROD_URL }}   # so even though ou put on dotenv and load config file, te github uses its own maachne where the .env file will never load
                                         # so to avoid the ssituation we use the github=> env==> secrets , we will store URL, and that URL will beusedhere
                                           # how to set varaible in github:?? 1. Go to: Repo → Settings → Secrets → Actions, 2. Add:Name: BASE_URL,Value: https://your-app.com
       
