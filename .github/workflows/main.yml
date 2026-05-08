@@ -31,10 +31,10 @@ jobs:  # now you can define the job to github
       - name: Run/execute the tests  #STEP 4
         run: npx playwright test   # normla command in order  to run all tests
         env:
-          BASE_URL: ${{ secrets.PROD_URL }}   # so even though ou put on dotenv and load config file, te github uses its own maachne where the .env file will never load
+          PROD_URL: ${{ secrets.PROD_URL }}   # so even though ou put on dotenv and load config file, te github uses its own maachne where the .env file will never load
                                         # so to avoid the ssituation we use the github=> env==> secrets , we will store URL, and that URL will beusedhere
                                           # how to set varaible in github:?? 1. Go to: Repo → Settings → Secrets → Actions, 2. Add:Name: BASE_URL,Value: https://your-app.com
-      
+                                        # makesure the environment you shouldbe same aas the environment variable
       - name: Upload reports after excution  #STEP 5
         uses:  actions/upload-artifact@v4 # download the workflow files if it return s any files, here we get the html report
         if: always()  #when it should upload condition , i specified here alwas (no matter failed or passed)
