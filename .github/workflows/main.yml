@@ -10,6 +10,7 @@ jobs:  # now you can define the job to github
   test:
     name: sample first test CICD execution # whole job name
     runs-on: windows-latest
+    environment: BASEURL 
     steps:
       - name: Download the current project code  # step name like step 1 heading
         uses: actions/checkout@v3 #It downloads  the repo where this workflow file exists (all files)
