@@ -36,7 +36,7 @@ jobs:  # now you can define the job to github
                                           # how to set varaible in github:?? 1. Go to: Repo → Settings → Secrets → Actions, 2. Add:Name: BASE_URL,Value: https://your-app.com
       
       - name: Upload reports after excution  #STEP 5
-        uses: actions/upload-artifact@v3 # download the workflow files if it return s any files, here we get the html report
+        uses:  actions/upload-artifact@v4 # download the workflow files if it return s any files, here we get the html report
         if: always()  #when it should upload condition , i specified here alwas (no matter failed or passed)
         with: 
           name: github-report # its is like downloading the file and it is renaming the file
