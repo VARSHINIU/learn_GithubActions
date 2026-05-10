@@ -1,10 +1,30 @@
 name: Run a sample test on github  #name of the workflow
 
 on:             #trigger on
-  push:        # whenever the devloper pushes code
-    branches:  # when anyone pushed code on the branches
-      - master    # when pushes code to main
+  # push:        # whenever the devloper pushes code
+  #   branches:  # when anyone pushed code on the branches
+  #     - master    # when pushes code to main
+  workflow_dispatch:
+    inputs:                      # adds form fields to the button
 
+      environment:               # input field 1
+        description: 'Which environment to test?'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+      browser:                   # input field 2
+        description: 'Which browser?'
+        required: false
+        default: 'chromium'
+        type: choice
+        options:
+          - chromium
+          - firefox
+          - webkit
 
 jobs:  # now you can define the job to github
   test:
