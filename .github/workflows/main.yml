@@ -14,7 +14,7 @@ on:             #trigger on
         type: choice
         options:
           - staging
-          - production
+          - producti  on
 
       browser:                   # input field 2
         description: 'Which browser?'
@@ -42,7 +42,6 @@ jobs:  # now you can define the job to github
                                  
         with:
           node-version: '18'
-
       - name: install playwright  #STEP 3
         run: npm ci       #installs the package json eveerything including playwright, can i use in local to istall playwright? yes , but only if your directory already has the package.json file
 
