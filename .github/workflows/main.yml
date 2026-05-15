@@ -1,13 +1,13 @@
-name: Run a sample test on github  #name of the workflow
+name: Run a sample test on github 
 
-on:             #trigger on
-  # push:        # whenever the devloper pushes code
-  #   branches:  # when anyone pushed code on the branches
-  #     - master    # when pushes code to main
+on:            
+  push:        
+    branches:  
+      - master   
   workflow_dispatch:
-    inputs:                      # adds form fields to the button
+    inputs:                    
 
-      environment:               # input field 1
+      environment:               
         description: 'Which environment to test?'
         required: true
         default: 'staging'
@@ -16,7 +16,7 @@ on:             #trigger on
           - staging
           - producti  on
 
-      browser:                   # input field 2
+      browser:                  
         description: 'Which browser?'
         required: false
         default: 'chromium'
@@ -26,40 +26,36 @@ on:             #trigger on
           - firefox
           - webkit
 
-jobs:  # now you can define the job to github
-  test:
-    name: sample first test CICD execution # whole job name
+jobs: 
+  test: 
+    name: sample first test CICD execution 
     runs-on: windows-latest
     environment: BASEURL 
     steps:
-      - name: Download the current project code  # step name like step 1 heading
-        uses: actions/checkout@v3 #It downloads  the repo where this workflow file exists (all files)
+      - name: Download the current project code  
+        uses: actions/checkout@v3 
 
-      - name: Download the environment (Nodejs) #STEP 2
-        uses: actions/setup-node@v3  # PLAYWRIGHT - here , as i am having the playwright  iwill download node js to execute 
-                                  # we mostly install the playwright using the terminal box, so we use "npm ci " ==> which install everthing include playwright
-                                  # CYPRESS- SAme as playwright
-                                 
+      - name: Download the environment (Nodejs) 
+        uses: actions/setup-node@v3  
+                                         
         with:
           node-version: '18'
-      - name: install playwright  #STEP 3
-        run: npm ci       #installs the package json eveerything including playwright, can i use in local to istall playwright? yes , but only if your directory already has the package.json file
+          
+      - name: install playwright  
+        run: npm ci    
 
       - name: install the browsers of playwright and installthe libraries for that OS like graphis, styles..
-        run: npx playwright install --with-deps    # npx playwright install ==> install sthe browser, --with-deps ==> installs the system level libraries  (e.g., fonts, graphics libraries, and windowing system components) that the browsers need to function on the host OS.
+        run: npx playwright install --with-deps   
 
-      - name: Run/execute the tests  #STEP 4
-        run: npx playwright test   # normla command in order  to run all tests
+      - name: Run/execute the tests 
+        run: npx playwright test   
         env:
-          PROD_URL: ${{ secrets.PROD_URL }}   # so even though ou put on dotenv and load config file, te github uses its own maachne where the .env file will never load
-                                        # so to avoid the ssituation we use the github=> env==> secrets , we will store URL, and that URL will beusedhere
-                                          # how to set varaible in github:?? 1. Go to: Repo → Settings → Secrets → Actions, 2. Add:Name: BASE_URL,Value: https://your-app.com
-                                        # makesure the environment you shouldbe same aas the environment variable
-      - name: Upload reports after excution  #STEP 5
-        uses:  actions/upload-artifact@v4 # download the workflow files if it return s any files, here we get the html report
-        if: always()  #when it should upload condition , i specified here alwas (no matter failed or passed)
+          PROD_URL: ${{ secrets.PROD_URL }}   
+      - name: Upload reports after excution  
+        uses:  actions/upload-artifact@v4 
+        if: always() 
         with: 
-          name: github-report # its is like downloading the file and it is renaming the file
-          path: playwright-report/  # path where your actual file to be saved.
+          name: github-report 
+          path: playwright-report/
 
-          #check
+     
